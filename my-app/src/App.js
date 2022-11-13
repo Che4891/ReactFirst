@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import Props from "./components/props/props";
+import Counter from "./components/countert/counter"
 
 //создание компонента с помощью функуий
 
@@ -47,6 +49,8 @@ function App() {
       <Header />
       <Field />
       <Btn />
+      <Props />
+      <Counter counter={0}/>
     </div>
   );
 }
