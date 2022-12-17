@@ -1,38 +1,53 @@
-import {Component} from 'react'
+import { Component } from "react";
 
 // создание компонента через классы
 class ChildrenComponent extends Component {
   constructor(props) {
     super(props);
     //пропсы только для чтения если нужно что то менять для этого есть state
-    this.state={
-      years:27,
-      text:'click mi'
-    }
+    this.state = {
+      years: 27,
+      text: "click mi",
+      input: "",
+    };
   }
 
   nextYar = () => {
     // метод для изминения (мутации) state, меняеться только (years) то что мы укащываем ниже
+    // setState с аргументом state используеться тогда. когда нам нужно считать предылущие значение (например счетчик. новое значение идет от предыдущего)
+    this.setState((state) => ({
+      years: state.years + 1,
+    }));
+  };
 
-    this.setState(state => ({
-      years: state.years +1
-    }))
-  }
+  // setState без аргумента state используеться тогда. когда предыдущее значение не играет роли (например запись в инпут)
+  commitInputChanges = (e, input) => [
+    console.log(input),
+    this.setState({
+      input: e.target.value + 1,
+    }),
+  ];
+
   render() {
-    const{name, sername, link}=this.props;
+    const { name, sername, link } = this.props;
+    const{input, years, text} = this.state
     return (
-          <li>
-            <button onClick={this.nextYar} >{this.state.text}</button>
-            <h1>
-              My name is: {name.FirstName} , surnema: {sername()}, age: {this.state.years}
-            </h1>
-            <a target="blank" href={link}>
-              {link}
-            </a>
-          </li>
-        );
-  
-  
+      <li>
+        <button onClick={this.nextYar}>{text}</button>
+        <h1>
+          My name is: {name.FirstName} , surnema: {sername()}, age:{" "}
+          {years}, input-value:{input}
+        </h1>
+        <a target="blank" href={link}>
+          {link}
+        </a>
+        <form>
+          <span>Wrote something</span>
+          {/* функция с аргументом */}
+          <input type="text" onChange={(e) => this.commitInputChanges(e, 'imput')} />
+        </form>
+      </li>
+    );
   }
 }
 // создание компонента через функцию
